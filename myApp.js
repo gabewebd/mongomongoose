@@ -7,6 +7,20 @@ const uri = process.env.MONGO_URI;
 mongoose.connect(uri, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true 
+})
+.then(() => {
+  console.log('MongoDB connected successfully');
+})
+.catch(err => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected');
 });
 
 let PersonSchema = new mongoose.Schema({
